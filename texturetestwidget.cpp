@@ -123,12 +123,12 @@ void TextureTestWidget::initializeGL()
 
     m_vertextBuffer.create();
     m_vertextBuffer.bind();
-    m_vertextBuffer.allocate(vertexArry,12 * sizeof(float));
+    m_vertextBuffer.allocate(vertexArry,12 * sizeof(float)); //12的含义是：vertexArry的长度是12
 
 
     m_textureBuffer.create();
     m_textureBuffer.bind();
-    m_textureBuffer.allocate(textureArry, 12 * sizeof(float));
+    m_textureBuffer.allocate(textureArry, 12 * sizeof(float));//12的含义是：textureArry的长度是12
 
     m_indexBuffer.create();
     m_indexBuffer.bind();
@@ -219,13 +219,13 @@ void  TextureTestWidget::paintGL()
     m_vertextBuffer.bind();
     int vectlocation = m_shaderProgram.attributeLocation("position");
     m_shaderProgram.enableAttributeArray(vectlocation);
-    m_shaderProgram.setAttributeBuffer(vectlocation,GL_FLOAT,0,3,3*sizeof(float));
+    m_shaderProgram.setAttributeBuffer(vectlocation,GL_FLOAT,0,3,3*sizeof(float));// 0,3,3 分别对应: m_vertextBuffer的偏移地址，解析尺寸，步长
 
 
     m_textureBuffer.bind();
     int texcoordLocation = m_shaderProgram.attributeLocation("texcoor");
     m_shaderProgram.enableAttributeArray(texcoordLocation);
-    m_shaderProgram.setAttributeBuffer(texcoordLocation,GL_FLOAT,0,3,3*sizeof(float));
+    m_shaderProgram.setAttributeBuffer(texcoordLocation,GL_FLOAT,0,3,3*sizeof(float));// 0,3,3 分别对应: m_textureBuffer的偏移地址，解析尺寸，步长
 
     m_shaderProgram.setUniformValue("sampler",0);
 
@@ -234,11 +234,9 @@ void  TextureTestWidget::paintGL()
     m_texture->bind();
 
 
-    //参数3:表示从indexArry的第3个数 0 开始
-    //参数6:表示从indexArry的第3个数 0 开始，一共填往后的6个数
+    //参数3:表示从indexArry的第3个数 0 开始,代表数据的偏移位置，即offset
+    //参数6:表示从indexArry的第3个数 0 开始，一共填往后的6个数，代表一个片元数据的长度，即size
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT,(const void*) (3 * sizeof(unsigned short)));
-
-   // glDrawElements(GL_LINES, 2, GL_UNSIGNED_SHORT,(const void*) (4 * sizeof(unsigned short)));
 
 }
 
